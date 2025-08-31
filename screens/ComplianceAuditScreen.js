@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, StatusBar, Alert } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, StatusBar } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useTheme } from '../context/ThemeContext';
 
-// Dummy questions based on the "Compliance Audit" idea
 const SAFETY_AUDIT_QUESTIONS = [
   { id: 'saf-1', text: 'Are emergency exits clear and unobstructed?' },
   { id: 'saf-2', text: 'Are all workers wearing appropriate PPE?' },
@@ -11,7 +11,9 @@ const SAFETY_AUDIT_QUESTIONS = [
   { id: 'saf-5', text: 'Is first-aid equipment readily available?' },
 ];
 
-export default function ComplianceAuditScreen({ navigation }) {
+export default function ComplianceAuditScreen() {
+  const { theme } = useTheme();
+  const styles = createStyles(theme);
   const [auditState, setAuditState] = useState('start'); // 'start', 'in_progress', 'complete'
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState([]);
@@ -37,19 +39,17 @@ export default function ComplianceAuditScreen({ navigation }) {
       setAuditState('start');
   }
 
-  // Renders the initial start screen
   const renderStartScreen = () => (
     <View style={styles.contentContainer}>
-      <MaterialCommunityIcons name="clipboard-check-outline" size={60} color="#007AFF" />
+      <MaterialCommunityIcons name="clipboard-check-outline" size={60} color={theme.primary} />
       <Text style={styles.title}>Compliance Audit</Text>
-      <Text style={styles.description}>Select an audit type to begin the inspection process. Each step will guide you through the required checks.</Text>
+      <Text style={styles.description}>Select an audit type to begin the inspection process.</Text>
       <TouchableOpacity style={styles.button} onPress={startAudit}>
         <Text style={styles.buttonText}>Start Safety Audit</Text>
       </TouchableOpacity>
     </View>
   );
 
-  // Renders the question-and-answer view
   const renderInProgressScreen = () => {
     const question = SAFETY_AUDIT_QUESTIONS[currentQuestionIndex];
     return (
@@ -65,20 +65,16 @@ export default function ComplianceAuditScreen({ navigation }) {
             <MaterialCommunityIcons name="close-circle-outline" size={24} color="#fff" />
             <Text style={styles.buttonText}>No</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.answerButton, styles.naButton]} onPress={() => handleAnswer('N/A')}>
-            <Text style={styles.buttonText}>N/A</Text>
-          </TouchableOpacity>
         </View>
       </View>
     );
   };
 
-  // Renders the final completion screen
   const renderCompleteScreen = () => (
     <View style={styles.contentContainer}>
         <MaterialCommunityIcons name="check-decagram" size={60} color="#34C759" />
         <Text style={styles.title}>Audit Complete</Text>
-        <Text style={styles.description}>Thank you. The audit results have been successfully logged.</Text>
+        <Text style={styles.description}>The audit results have been successfully logged.</Text>
         <TouchableOpacity style={styles.button} onPress={resetAudit}>
             <Text style={styles.buttonText}>Start New Audit</Text>
         </TouchableOpacity>
@@ -95,10 +91,10 @@ export default function ComplianceAuditScreen({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (theme) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: theme.background,
     justifyContent: 'center',
   },
   contentContainer: {
@@ -106,14 +102,14 @@ const styles = StyleSheet.create({
     padding: 30,
   },
   title: {
-    color: '#fff',
+    color: theme.text,
     fontSize: 28,
     fontWeight: 'bold',
     textAlign: 'center',
     marginTop: 20,
   },
   description: {
-    color: '#8E8E93',
+    color: theme.textSecondary,
     fontSize: 16,
     textAlign: 'center',
     marginTop: 15,
@@ -121,7 +117,7 @@ const styles = StyleSheet.create({
     lineHeight: 24,
   },
   button: {
-    backgroundColor: '#007AFF',
+    backgroundColor: theme.primary,
     paddingVertical: 15,
     paddingHorizontal: 40,
     borderRadius: 12,
@@ -133,12 +129,12 @@ const styles = StyleSheet.create({
     marginLeft: 8
   },
   progressText: {
-      color: '#8E8E93',
+      color: theme.textSecondary,
       fontSize: 16,
       marginBottom: 20,
   },
   questionText: {
-      color: '#fff',
+      color: theme.text,
       fontSize: 22,
       fontWeight: '600',
       textAlign: 'center',
@@ -162,7 +158,4 @@ const styles = StyleSheet.create({
   noButton: {
       backgroundColor: '#FF6347',
   },
-  naButton: {
-      backgroundColor: '#8E8E93',
-  }
 });
