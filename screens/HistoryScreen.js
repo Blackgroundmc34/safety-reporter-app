@@ -7,7 +7,7 @@ import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const API_BASE_URL = 'http://172.20.10.3/safety_api';
+const API_BASE_URL = 'http://192.168.6.152/safety_api';
 const STORAGE_KEY = '@offline_reports';
 
 export default function HistoryScreen() {
