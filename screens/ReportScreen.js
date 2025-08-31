@@ -8,7 +8,7 @@ import { useAuth } from '../context/AuthContext'; // <-- Import useAuth
 import { useTheme } from '../context/ThemeContext'; // <-- Import useTheme for styling
 
 // IMPORTANT: Use your computer's IP address here
-const API_BASE_URL = 'http://172.20.10.3/safety_api';
+const API_BASE_URL = 'http://192.168.6.152/safety_api';
 const STORAGE_KEY = '@offline_reports';
 
 export default function ReportScreen({ navigation }) {

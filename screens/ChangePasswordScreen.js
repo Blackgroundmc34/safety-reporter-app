@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 
 // IMPORTANT: Use your computer's IP address here
-const API_BASE_URL = 'http://172.16.32.176/safety_api';
+const API_BASE_URL = 'http://192.168.6.152/safety_api';
 
 export default function ChangePasswordScreen({ navigation }) {
   const { theme } = useTheme();

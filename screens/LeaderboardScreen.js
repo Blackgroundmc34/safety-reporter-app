@@ -7,7 +7,7 @@ import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 
 // IMPORTANT: Use your computer's IP address here
-const API_BASE_URL = 'http://172.20.10.3/safety_api'; 
+const API_BASE_URL = 'http://192.168.6.152/safety_api'; 
 
 // This function returns a color and icon for the top 3 ranks
 const getRankStyle = (rank) => {
