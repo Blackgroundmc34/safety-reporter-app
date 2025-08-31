@@ -4,7 +4,6 @@ import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-// --- NEW: Reusable component for an input field with an icon ---
 const InputWithIcon = ({ iconName, placeholder, value, onChangeText, secureTextEntry = false, keyboardType = 'default', autoCapitalize = 'sentences' }) => {
     const { theme } = useTheme();
     const styles = createStyles(theme);
@@ -54,6 +53,7 @@ export default function AuthScreen() {
           Alert.alert("Error", "Please fill in all fields.");
           return;
       }
+      // Note: role and department_id are set on the backend or by an admin by default
       const result = await register({ full_name: fullName, employee_id: employeeId, email, password });
       if (result.success) {
           Alert.alert("Success", "Registration successful! Please log in.", [
@@ -102,7 +102,6 @@ const createStyles = (theme) => StyleSheet.create({
   title: { color: theme.text, fontSize: 32, fontWeight: 'bold' },
   subtitle: { color: theme.textSecondary, fontSize: 18, marginTop: 8 },
   form: { paddingHorizontal: 30 },
-  // --- NEW STYLES ---
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -120,7 +119,6 @@ const createStyles = (theme) => StyleSheet.create({
     paddingVertical: 15,
     fontSize: 16,
   },
-  // --- END NEW STYLES ---
   button: { backgroundColor: theme.primary, padding: 18, borderRadius: 12, alignItems: 'center', marginTop: 10 },
   buttonText: { color: '#fff', fontSize: 18, fontWeight: 'bold' },
   switchText: { color: theme.textSecondary, textAlign: 'center', marginTop: 20, fontSize: 16 }

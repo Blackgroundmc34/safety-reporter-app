@@ -6,8 +6,8 @@ import { useAuth } from '../context/AuthContext';
 export default function EditProfileScreen({ navigation }) {
   const { theme } = useTheme();
   const { user, updateProfile } = useAuth();
+  const styles = createStyles(theme);
 
-  // Pre-fill the form with the current user's data
   const [fullName, setFullName] = useState(user.full_name);
   const [employeeId, setEmployeeId] = useState(user.employee_id);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -35,14 +35,14 @@ export default function EditProfileScreen({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
+    <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
       <View style={styles.formContainer}>
         <Text style={styles.label}>Full Name</Text>
-        <TextInput style={styles.input} value={fullName} onChangeText={setFullName} />
+        <TextInput style={styles.input} value={fullName} onChangeText={setFullName} placeholderTextColor="#666" />
 
         <Text style={styles.label}>Employee ID</Text>
-        <TextInput style={styles.input} value={employeeId} onChangeText={setEmployeeId} />
+        <TextInput style={styles.input} value={employeeId} onChangeText={setEmployeeId} placeholderTextColor="#666" />
 
         <TouchableOpacity style={styles.button} onPress={handleUpdate} disabled={isSubmitting}>
             <Text style={styles.buttonText}>{isSubmitting ? "Saving..." : "Save Changes"}</Text>
@@ -52,12 +52,11 @@ export default function EditProfileScreen({ navigation }) {
   );
 }
 
-// Re-using styles from other screens for consistency
-const styles = StyleSheet.create({
-  container: { flex: 1 },
+const createStyles = (theme) => StyleSheet.create({
+  container: { flex: 1, backgroundColor: theme.background },
   formContainer: { padding: 20 },
-  label: { fontSize: 16, fontWeight: '600', color: '#8E8E93', marginBottom: 8, marginLeft: 5 },
-  input: { backgroundColor: '#1C1C1E', color: '#fff', paddingHorizontal: 15, paddingVertical: 15, borderRadius: 12, marginBottom: 20, fontSize: 16 },
-  button: { backgroundColor: '#007AFF', padding: 18, borderRadius: 12, alignItems: 'center' },
+  label: { fontSize: 16, fontWeight: '600', color: theme.textSecondary, marginBottom: 8, marginLeft: 5 },
+  input: { backgroundColor: theme.card, color: theme.text, padding: 15, borderRadius: 12, marginBottom: 20, fontSize: 16 },
+  button: { backgroundColor: theme.primary, padding: 18, borderRadius: 12, alignItems: 'center' },
   buttonText: { color: '#fff', fontSize: 18, fontWeight: 'bold' },
 });

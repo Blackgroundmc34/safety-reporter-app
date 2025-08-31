@@ -4,12 +4,12 @@ import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 
-// IMPORTANT: Use your computer's IP address here
 const API_BASE_URL = 'http://192.168.6.152/safety_api';
 
 export default function ChangePasswordScreen({ navigation }) {
   const { theme } = useTheme();
   const { user } = useAuth();
+  const styles = createStyles(theme);
   
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -48,17 +48,17 @@ export default function ChangePasswordScreen({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
+    <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
       <View style={styles.formContainer}>
         <Text style={styles.label}>Current Password</Text>
-        <TextInput style={styles.input} secureTextEntry value={oldPassword} onChangeText={setOldPassword} />
+        <TextInput style={styles.input} secureTextEntry value={oldPassword} onChangeText={setOldPassword} placeholderTextColor="#666" />
 
         <Text style={styles.label}>New Password</Text>
-        <TextInput style={styles.input} secureTextEntry value={newPassword} onChangeText={setNewPassword} />
+        <TextInput style={styles.input} secureTextEntry value={newPassword} onChangeText={setNewPassword} placeholderTextColor="#666" />
 
         <Text style={styles.label}>Confirm New Password</Text>
-        <TextInput style={styles.input} secureTextEntry value={confirmPassword} onChangeText={setConfirmPassword} />
+        <TextInput style={styles.input} secureTextEntry value={confirmPassword} onChangeText={setConfirmPassword} placeholderTextColor="#666" />
 
         <TouchableOpacity style={styles.button} onPress={handleChangePassword} disabled={isSubmitting}>
             <Text style={styles.buttonText}>{isSubmitting ? "Saving..." : "Change Password"}</Text>
@@ -68,11 +68,11 @@ export default function ChangePasswordScreen({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: { flex: 1 },
+const createStyles = (theme) => StyleSheet.create({
+  container: { flex: 1, backgroundColor: theme.background },
   formContainer: { padding: 20 },
-  label: { fontSize: 16, fontWeight: '600', color: '#8E8E93', marginBottom: 8, marginLeft: 5 },
-  input: { backgroundColor: '#1C1C1E', color: '#fff', paddingHorizontal: 15, paddingVertical: 15, borderRadius: 12, marginBottom: 20, fontSize: 16 },
-  button: { backgroundColor: '#007AFF', padding: 18, borderRadius: 12, alignItems: 'center' },
+  label: { fontSize: 16, fontWeight: '600', color: theme.textSecondary, marginBottom: 8, marginLeft: 5 },
+  input: { backgroundColor: theme.card, color: theme.text, padding: 15, borderRadius: 12, marginBottom: 20, fontSize: 16 },
+  button: { backgroundColor: theme.primary, padding: 18, borderRadius: 12, alignItems: 'center' },
   buttonText: { color: '#fff', fontSize: 18, fontWeight: 'bold' },
 });

@@ -2,43 +2,40 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useTheme } from './context/ThemeContext'; // cite: ThemeContext.js
+import { useTheme } from './context/ThemeContext';
 
-// Import ALL screens
-import HomeScreen from './screens/HomeScreen'; // cite: HomeScreen.js
-import ReportScreen from './screens/ReportScreen'; // cite: ReportScreen.js
-import HistoryScreen from './screens/HistoryScreen'; // cite: HistoryScreen.js
-import SettingsScreen from './screens/SettingsScreen'; // cite: SettingsScreen.js
-import ProceduresScreen from './screens/ProceduresScreen'; // cite: ProceduresScreen.js
-import PredictiveMaintenanceScreen from './screens/PredictiveMaintenanceScreen'; // cite: PredictiveMaintenanceScreen.js
-import ComplianceAuditScreen from './screens/ComplianceAuditScreen'; // cite: ComplianceAuditScreen.js
-import LeaderboardScreen from './screens/LeaderboardScreen'; // cite: LeaderboardScreen.js
-import EditProfileScreen from './screens/EditProfileScreen'; // cite: EditProfileScreen.js
-import ChangePasswordScreen from './screens/ChangePasswordScreen'; // cite: ChangePasswordScreen.js
-import EmergencyContactsScreen from './screens/EmergencyContactsScreen'; // cite: EmergencyContactsScreen.js
-import ProcedureDetailScreen from './screens/ProcedureDetailScreen'; // NEW: Import ProcedureDetailScreen
+// Import all screens for the Employee user flow
+import HomeScreen from './screens/HomeScreen';
+import ReportScreen from './screens/ReportScreen';
+import HistoryScreen from './screens/HistoryScreen';
+import SettingsScreen from './screens/SettingsScreen';
+import ProceduresScreen from './screens/ProceduresScreen';
+import ProcedureDetailScreen from './screens/ProcedureDetailScreen';
+import LeaderboardScreen from './screens/LeaderboardScreen';
+import EditProfileScreen from './screens/EditProfileScreen';
+import ChangePasswordScreen from './screens/ChangePasswordScreen';
+import EmergencyContactsScreen from './screens/EmergencyContactsScreen';
+import ComplianceAuditScreen from './screens/ComplianceAuditScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-// HomeStack definition
+// This stack contains all screens reachable from the Home tab
 function HomeStack() {
-  const { theme } = useTheme(); // cite: ThemeContext.js
+  const { theme } = useTheme();
   return (
     <Stack.Navigator>
       <Stack.Screen name="HomeMain" component={HomeScreen} options={{ headerShown: false }} />
       <Stack.Screen name="ReportIncident" component={ReportScreen} options={{ title: 'Report Incident', headerStyle: { backgroundColor: theme.card }, headerTintColor: theme.text, headerBackTitle: ' ' }} />
       <Stack.Screen name="Procedures" component={ProceduresScreen} options={{ title: 'Safety Procedures', headerStyle: { backgroundColor: theme.card }, headerTintColor: theme.text, headerBackTitle: ' ' }} />
-      <Stack.Screen name="Maintenance" component={PredictiveMaintenanceScreen} options={{ title: 'Predictive Maintenance', headerStyle: { backgroundColor: theme.card }, headerTintColor: theme.text, headerBackTitle: ' ' }} />
-      <Stack.Screen name="Audit" component={ComplianceAuditScreen} options={{ title: 'Compliance Audit', headerStyle: { backgroundColor: theme.card }, headerTintColor: theme.text, headerBackTitle: ' ' }} />
       <Stack.Screen name="Leaderboard" component={LeaderboardScreen} options={{ title: 'Safety Leaderboard', headerStyle: { backgroundColor: theme.card }, headerTintColor: theme.text, headerBackTitle: ' ' }} />
       <Stack.Screen name="EmergencyContacts" component={EmergencyContactsScreen} options={{ title: 'Emergency Contacts', headerStyle: { backgroundColor: theme.card }, headerTintColor: theme.text, headerBackTitle: ' ' }} />
-      {/* NEW: ProcedureDetailScreen added to HomeStack */}
+      <Stack.Screen name="Audit" component={ComplianceAuditScreen} options={{ title: 'Compliance Audit', headerStyle: { backgroundColor: theme.card }, headerTintColor: theme.text, headerBackTitle: ' ' }} />
       <Stack.Screen
         name="ProcedureDetail"
         component={ProcedureDetailScreen}
         options={({ route }) => ({
-            title: route.params.title || 'Procedure Details', // Dynamically set title from passed params
+            title: route.params.title || 'Procedure Details',
             headerStyle: { backgroundColor: theme.card },
             headerTintColor: theme.text,
             headerBackTitle: ' ',
@@ -48,9 +45,9 @@ function HomeStack() {
   );
 }
 
-// SettingsStack definition
+// Settings stack is shared between roles
 function SettingsStack() {
-    const { theme } = useTheme(); // cite: ThemeContext.js
+    const { theme } = useTheme();
     return (
         <Stack.Navigator>
             <Stack.Screen name="SettingsMain" component={SettingsScreen} options={{ headerShown: false }} />
@@ -60,9 +57,9 @@ function SettingsStack() {
     )
 }
 
-// MainTabs definition
+// MainTabs defines the employee's main navigation
 export default function MainTabs() {
-    const { theme } = useTheme(); // cite: ThemeContext.js
+    const { theme } = useTheme();
     return (
         <Tab.Navigator
             screenOptions={({ route }) => ({

@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, FlatList, TextInput, TouchableOpacity, StatusBar, Alert } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, FlatList, TextInput, TouchableOpacity, StatusBar } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useTheme } from '../context/ThemeContext'; // Import useTheme
+import { useTheme } from '../context/ThemeContext';
 
-// Dummy data for our procedures list
 const DUMMY_PROCEDURES = [
   { id: '1', title: 'Lockout/Tagout (LOTO)', category: 'Equipment Safety', icon: 'lock-check-outline' },
   { id: '2', title: 'Working at Heights', category: 'Personal Safety', icon: 'chart-gantt' },
@@ -14,7 +13,8 @@ const DUMMY_PROCEDURES = [
 ];
 
 export default function ProceduresScreen({ navigation }) {
-  const { theme } = useTheme(); // Get theme for styling
+  const { theme } = useTheme();
+  const styles = createStyles(theme);
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredProcedures = DUMMY_PROCEDURES.filter(item =>
@@ -24,30 +24,25 @@ export default function ProceduresScreen({ navigation }) {
 
   const renderProcedure = ({ item }) => (
     <TouchableOpacity
-      style={[styles.itemContainer, { backgroundColor: theme.card }]}
-      onPress={() => navigation.navigate('ProcedureDetail', { procedureId: item.id, title: item.title })} // Navigate here!
+      style={styles.itemContainer}
+      onPress={() => navigation.navigate('ProcedureDetail', { procedureId: item.id, title: item.title })}
     >
       <MaterialCommunityIcons name={item.icon} size={28} color={theme.primary} style={styles.itemIcon} />
       <View style={styles.itemTextContainer}>
-        <Text style={[styles.itemTitle, { color: theme.text }]}>{item.title}</Text>
-        <Text style={[styles.itemCategory, { color: theme.textSecondary }]}>{item.category}</Text>
+        <Text style={styles.itemTitle}>{item.title}</Text>
+        <Text style={styles.itemCategory}>{item.category}</Text>
       </View>
       <MaterialCommunityIcons name="chevron-right" size={24} color={theme.textSecondary} />
     </TouchableOpacity>
   );
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
+    <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
-      <View style={styles.header}>
-        <Text style={[styles.headerTitle, { color: theme.text }]}>Safety Procedures</Text>
-      </View>
-
-      {/* Search Bar */}
-      <View style={[styles.searchContainer, { backgroundColor: theme.card }]}>
+      <View style={styles.searchContainer}>
         <MaterialCommunityIcons name="magnify" size={22} color={theme.textSecondary} style={styles.searchIcon} />
         <TextInput
-          style={[styles.searchInput, { color: theme.text }]}
+          style={styles.searchInput}
           placeholder="Search procedures..."
           placeholderTextColor={theme.textSecondary}
           value={searchQuery}
@@ -60,32 +55,25 @@ export default function ProceduresScreen({ navigation }) {
         renderItem={renderProcedure}
         keyExtractor={item => item.id}
         contentContainerStyle={{ paddingHorizontal: 20 }}
-        ListEmptyComponent={<Text style={[styles.emptyText, { color: theme.textSecondary }]}>No procedures found.</Text>}
+        ListEmptyComponent={<Text style={styles.emptyText}>No procedures found.</Text>}
       />
     </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (theme) => StyleSheet.create({
   container: {
     flex: 1,
-    // Background color removed here as it's applied in SafeAreaView via theme
-  },
-  header: {
-    padding: 20,
-    paddingBottom: 10,
-  },
-  headerTitle: {
-    fontSize: 34,
-    fontWeight: 'bold',
+    backgroundColor: theme.background,
   },
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    // Background color removed here as it's applied dynamically
+    backgroundColor: theme.card,
     borderRadius: 12,
     marginHorizontal: 20,
     marginBottom: 20,
+    marginTop: 10,
     paddingHorizontal: 15,
   },
   searchIcon: {
@@ -93,14 +81,14 @@ const styles = StyleSheet.create({
   },
   searchInput: {
     flex: 1,
-    // Color removed here as it's applied dynamically
+    color: theme.text,
     fontSize: 17,
     paddingVertical: 12,
   },
   itemContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    // Background color removed here as it's applied dynamically
+    backgroundColor: theme.card,
     padding: 15,
     borderRadius: 12,
     marginBottom: 10,
@@ -112,18 +100,18 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   itemTitle: {
-    // Color removed here as it's applied dynamically
+    color: theme.text,
     fontSize: 17,
     fontWeight: '600',
   },
   itemCategory: {
-    // Color removed here as it's applied dynamically
+    color: theme.textSecondary,
     fontSize: 14,
     marginTop: 2,
   },
   emptyText: {
       textAlign: 'center',
-      // Color removed here as it's applied dynamically
+      color: theme.textSecondary,
       marginTop: 50,
   },
 });
