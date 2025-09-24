@@ -21,7 +21,7 @@ import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
 
 // IMPORTANT: Double-check that this IP address is still correct for your server.
-const API_BASE_URL = 'http://192.168.6.152/safety_api'; // :contentReference[oaicite:2]{index=2}
+const API_BASE_URL = 'https://www.masilelamc.co.za/safety_api'; // :contentReference[oaicite:2]{index=2}
 
 export default function ReportScreen({ navigation }) {
   const { user } = useAuth();

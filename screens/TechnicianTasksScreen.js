@@ -7,7 +7,7 @@ import { useTheme } from '../context/ThemeContext';
 
 // --- CORRECTED IP ADDRESS ---
 // Ensure this is the correct IP address for your computer running the server.
-const API_BASE_URL = 'http://192.168.6.152/safety_api';
+const API_BASE_URL = 'https://www.masilelamc.co.za/safety_api';
 
 export default function TechnicianTasksScreen() {
     const { user } = useAuth();

@@ -6,7 +6,7 @@ import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 
-const API_BASE_URL = 'http://192.168.6.152/safety_api'; 
+const API_BASE_URL = 'https://www.masilelamc.co.za/safety_api'; 
 
 const getRankStyle = (rank) => {
   if (rank === 1) return { color: '#FFD700', icon: 'trophy-variant' };
