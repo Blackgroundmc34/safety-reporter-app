@@ -5,7 +5,7 @@ import axios from 'axios'; // Using axios for cleaner API calls
 const AuthContext = createContext();
 
 // IMPORTANT: Use your computer's IP address here
-const API_BASE_URL = 'http://192.168.6.152/safety_api';
+const API_BASE_URL = 'https://www.masilelamc.co.za/safety_api';
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);

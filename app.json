@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "newArchEnabled": true,
+    "newArchEnabled": false,
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
@@ -34,6 +34,9 @@
       "eas": {
         "projectId": "efa4cca1-1aa3-4a96-9712-f2b6937790b1"
       }
-    }
+    },
+    "plugins": [
+      "./plugins/withAndroidAppComponents.js"
+    ]
   }
 }
